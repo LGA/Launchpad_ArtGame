@@ -3,7 +3,7 @@
 **/
 
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Control : MonoBehaviour {
 
@@ -13,22 +13,40 @@ public class Control : MonoBehaviour {
 	// saves all trapdoor objects
 	private string[] allDoorsKeys;
 	private GameObject[] allDoorsValues;
+	private GameObject[] allDoorCharacters;
 	private int allDoorsCounter;
+
+	GameObject cam1;
+	GameObject cam2;
+	GameObject overview;
+
+	bool camToggle;
 
 	// initialization
 	void Start () {
 
 		allDoorsKeys = new string[64];
 		allDoorsValues = new GameObject[64];
+		allDoorCharacters = new GameObject[64];
 		allDoorsCounter = 0;
 
+		cam1 = GameObject.Find("MainCameraP1");
+		cam2 = GameObject.Find("MainCameraP2");
+		overview = GameObject.Find("OverviewCAM");
+		overview.SetActive(false);
+		bool camToggle = false;
+		
+
 		Transform currentDoor;
+
+		List<GameObject> models1 = transform.GetComponent<CharacterLoad>().getListOfCharacters(32);
+		List<GameObject> models2 = transform.GetComponent<CharacterLoad>().getListOfCharacters(32);
 
 		// instantiate field of trapdoors
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				currentDoor = (Transform) Instantiate(doorPrefab,
-				                          new Vector3((float) i, 0f, (float) j),
+				                                      new Vector3((float) i<=3 ? i*5 : 5+i*5, 0f, (float) j*5),
 				                          Quaternion.identity);
 
 				// save trapdoor data for later
@@ -44,9 +62,15 @@ public class Control : MonoBehaviour {
 				}
 
 				// Instantiate Character
-				Instantiate(characterPrefab,
-				            new Vector3((float) i, 0f, (float) j),
-				            Quaternion.identity);
+				if((i*8+j)<32){
+				allDoorCharacters[i*8+j] = Instantiate(models1[(i*8+j)],
+					                                       new Vector3((float) i<=3 ? i*5 : 5+i*5, 15f, (float) j*5),
+					                                       Quaternion.Euler(0.0f, 90.0f, 0.0f)) as GameObject;
+				} else {
+					allDoorCharacters[i*8+j] = Instantiate(models2[(i*8+j)-32],
+					                                       new Vector3((float) i<=3 ? i*5 : 5+i*5, 15f, (float) j*5),
+						                                       Quaternion.Euler(0.0f, 270.0f, 0.0f)) as GameObject;
+				}
 				
 			}
 		}
@@ -57,8 +81,18 @@ public class Control : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
-		if (Input.GetKeyDown (KeyCode.B)) {
+		//for(int i = 0; i < allDoorCharacters.Length; i++){
+		//	allDoorCharacters[i].transform.Rotate(new Vector3(allDoorCharacters[i].transform.rotation.x, allDoorCharacters[i].transform.rotation.y + 15.0f * Time.deltaTime, allDoorCharacters[i].transform.rotation.z));
+		//}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			camToggle = !camToggle;
+			/*cam1.GetComponent<Camera>().enabled = camToggle;
+			cam2.GetComponent<Camera>().enabled = camToggle;
+			overview.GetComponent<Camera>().enabled = !camToggle;*/
+			cam1.SetActive(camToggle);
+			cam2.SetActive(camToggle);
+			overview.SetActive(!camToggle);
+		} else if (Input.GetKeyDown (KeyCode.B)) {
 			chooseDoor("00");
 		} else if (Input.GetKeyDown (KeyCode.G)) {
 			chooseDoor("01");
@@ -189,10 +223,11 @@ public class Control : MonoBehaviour {
 		}
 
 	}
-
+	string lastKey = "";
 	// evoke action on a trapdoor
 	private void chooseDoor(string key) {
 
+		if(lastKey.Length>0 && lastKey != key) allDoorsValues[getPosition(lastKey)].GetComponent<DoorStatus>().setStatus(0);
 		DoorStatus doorScript = allDoorsValues[getPosition(key)].GetComponent<DoorStatus>();
 
 		// TODO real gaming interaction, currently only demo of all states
@@ -203,10 +238,15 @@ public class Control : MonoBehaviour {
 			doorScript.setStatus(3);
 		} else if (doorScript.getStatus() == 3) {
 			doorScript.setStatus(2);
+			playSound(key);
 		} else if (doorScript.getStatus() == 2) {
 			doorScript.setStatus(0);
 		}
+		lastKey = key;
+	}
 
+	private void playSound(string key){
+		AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("charSounds/" + allDoorCharacters[getPosition(key)].name.Split('(')[0])as AudioClip , new Vector3(0.0f, 0.0f, 0.0f));
 	}
 
 	// Get the Position of a key in the allDoorsKeys-Array

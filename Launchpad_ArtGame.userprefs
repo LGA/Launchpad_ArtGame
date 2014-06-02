@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Control.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CharacterLoad.cs">
     <Files>
-      <File FileName="Assets\DoorStatus.cs" Line="45" Column="11" />
-      <File FileName="Assets\Control.cs" Line="207" Column="28" />
+      <File FileName="Assets\CharacterLoad.cs" Line="1" Column="1" />
+      <File FileName="Assets\CharacterLoad.cs" Line="1" Column="1" />
+      <File FileName="Assets\KeystrokeListener.cs" Line="1" Column="1" />
+      <File FileName="Assets\DoorStatus.cs" Line="1" Column="1" />
+      <File FileName="Assets\Control.cs" Line="230" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

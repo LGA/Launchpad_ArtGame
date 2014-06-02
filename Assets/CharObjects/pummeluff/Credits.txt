@@ -1,0 +1,3 @@
+Due to texture clamping issues, a better looking, modified version of each character model is included along with edited eye textures, as well as the originals.
+
+Ripped by Random Talking Bush, exported, fixed and posted by Mighty Jetters. Credit isn't required but would be appreciated.
