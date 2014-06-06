@@ -1,0 +1,87 @@
+fileFormatVersion: 2
+guid: 0ce7d73a7c7a63f47bf661827d9b0ac6
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Regroup10
+    100002: Regroup11
+    100004: Regroup12
+    100006: Regroup24
+    100008: Regroup25
+    100010: //RootNode
+    400000: Regroup10
+    400002: Regroup11
+    400004: Regroup12
+    400006: Regroup24
+    400008: Regroup25
+    400010: //RootNode
+    2300000: Regroup10
+    2300002: Regroup11
+    2300004: Regroup12
+    2300006: Regroup24
+    2300008: Regroup25
+    3300000: Regroup10
+    3300002: Regroup11
+    3300004: Regroup12
+    3300006: Regroup24
+    3300008: Regroup25
+    4300000: Regroup10
+    4300002: Regroup11
+    4300004: Regroup12
+    4300006: Regroup24
+    4300008: Regroup25
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

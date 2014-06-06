@@ -1,0 +1,107 @@
+fileFormatVersion: 2
+guid: cdc44d4a4a0702a498ceebe18dbc8b29
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: blueshoulder_thing
+    100002: chains
+    100004: eyelashes
+    100006: eyes_blue_stuff
+    100008: hair
+    100010: jacket_shoes_gloves_gauntlet
+    100012: pants_glove_socks
+    100014: red_cloth_transparency_thing
+    100016: skin
+    100018: //RootNode
+    400000: blueshoulder_thing
+    400002: chains
+    400004: eyelashes
+    400006: eyes_blue_stuff
+    400008: hair
+    400010: jacket_shoes_gloves_gauntlet
+    400012: pants_glove_socks
+    400014: red_cloth_transparency_thing
+    400016: skin
+    400018: //RootNode
+    2300000: blueshoulder_thing
+    2300002: chains
+    2300004: eyelashes
+    2300006: eyes_blue_stuff
+    2300008: hair
+    2300010: jacket_shoes_gloves_gauntlet
+    2300012: pants_glove_socks
+    2300014: red_cloth_transparency_thing
+    2300016: skin
+    3300000: blueshoulder_thing
+    3300002: chains
+    3300004: eyelashes
+    3300006: eyes_blue_stuff
+    3300008: hair
+    3300010: jacket_shoes_gloves_gauntlet
+    3300012: pants_glove_socks
+    3300014: red_cloth_transparency_thing
+    3300016: skin
+    4300000: blueshoulder_thing
+    4300002: chains
+    4300004: eyelashes
+    4300006: eyes_blue_stuff
+    4300008: hair
+    4300010: jacket_shoes_gloves_gauntlet
+    4300012: pants_glove_socks
+    4300014: red_cloth_transparency_thing
+    4300016: skin
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
