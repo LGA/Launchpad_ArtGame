@@ -16,6 +16,18 @@ public class Control : MonoBehaviour {
 	private GameObject[] allDoorCharacters;
 	private int allDoorsCounter;
 
+	private float roundCounter=5;
+	private int roundNumber=1;
+	private bool isPaused=true, roundHasWinner=false;
+
+	private HashSet<GameObject> quizKeys;
+	private GameObject currentCharacter;
+	private int player1Points=32, player2Points=32;
+
+
+	private const float roundCounterDefault=12, pauseCounterDefault=5;
+	private GUIText infoText, scorePlayer1, scorePlayer2;
+
 	GameObject cam1;
 	GameObject cam2;
 	GameObject overview;
@@ -24,6 +36,8 @@ public class Control : MonoBehaviour {
 
 	// initialization
 	void Start () {
+	
+		quizKeys = new HashSet<GameObject>();
 
 		allDoorsKeys = new string[64];
 		allDoorsValues = new GameObject[64];
@@ -35,7 +49,11 @@ public class Control : MonoBehaviour {
 		overview = GameObject.Find("OverviewCAM");
 		overview.SetActive(false);
 		bool camToggle = false;
-		
+
+
+		infoText = (GUIText) GameObject.Find("RoundCountdown").GetComponent("GUIText");
+		scorePlayer1 = (GUIText) GameObject.Find("Player1").GetComponent("GUIText");
+		scorePlayer2 = (GUIText) GameObject.Find("Player2").GetComponent("GUIText");
 
 		Transform currentDoor;
 
@@ -74,181 +92,314 @@ public class Control : MonoBehaviour {
 				
 			}
 		}
+
 		
 	}
-	
-	// TODO Right half of field doesn't really fit yet and has some symbols missing
 
 	// Update is called once per frame
 	void Update () {
-		//for(int i = 0; i < allDoorCharacters.Length; i++){
-		//	allDoorCharacters[i].transform.Rotate(new Vector3(allDoorCharacters[i].transform.rotation.x, allDoorCharacters[i].transform.rotation.y + 15.0f * Time.deltaTime, allDoorCharacters[i].transform.rotation.z));
-		//}
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			camToggle = !camToggle;
-			/*cam1.GetComponent<Camera>().enabled = camToggle;
-			cam2.GetComponent<Camera>().enabled = camToggle;
-			overview.GetComponent<Camera>().enabled = !camToggle;*/
-			cam1.SetActive(camToggle);
-			cam2.SetActive(camToggle);
-			overview.SetActive(!camToggle);
-		} else if (Input.GetKeyDown (KeyCode.B)) {
-			chooseDoor("00");
-		} else if (Input.GetKeyDown (KeyCode.G)) {
-			chooseDoor("01");
-		} else if (Input.GetKeyDown (KeyCode.T)) {
-			chooseDoor("02");
-		} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
-			chooseDoor("03");
-		} else if (Input.GetKeyDown (KeyCode.Y)) {
-			chooseDoor("04");
-		} else if (Input.GetKeyDown (KeyCode.A)) {
-			chooseDoor("05");
-		} else if (Input.GetKeyDown (KeyCode.Q)) {
-			chooseDoor("06");
-		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
-			chooseDoor("07");
-		} else if (Input.GetKeyDown (KeyCode.N)) {
-			chooseDoor("10");
-		} else if (Input.GetKeyDown (KeyCode.H)) {
-			chooseDoor("11");
-		} else if (Input.GetKeyDown (KeyCode.Z)) {
-			chooseDoor("12");
-		} else if (Input.GetKeyDown (KeyCode.Alpha6)) {
-			chooseDoor("13");
-		} else if (Input.GetKeyDown (KeyCode.X)) {
-			chooseDoor("14");
-		} else if (Input.GetKeyDown (KeyCode.S)) {
-			chooseDoor("15");
-		} else if (Input.GetKeyDown (KeyCode.W)) {
-			chooseDoor("16");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			chooseDoor("17");
-		} else if (Input.GetKeyDown (KeyCode.M)) {
-			chooseDoor("20");
-		} else if (Input.GetKeyDown (KeyCode.J)) {
-			chooseDoor("21");
-		} else if (Input.GetKeyDown (KeyCode.U)) {
-			chooseDoor("22");
-		} else if (Input.GetKeyDown (KeyCode.Alpha7)) {
-			chooseDoor("23");
-		} else if (Input.GetKeyDown (KeyCode.C)) {
-			chooseDoor("24");
-		} else if (Input.GetKeyDown (KeyCode.D)) {
-			chooseDoor("25");
-		} else if (Input.GetKeyDown (KeyCode.E)) {
-			chooseDoor("26");
-		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-			chooseDoor("27");
-		} else if (Input.GetKeyDown (KeyCode.Comma)) {
-			chooseDoor("30");
-		} else if (Input.GetKeyDown (KeyCode.K)) {
-			chooseDoor("31");
-		} else if (Input.GetKeyDown (KeyCode.I)) {
-			chooseDoor("32");
-		} else if (Input.GetKeyDown (KeyCode.Alpha8)) {
-			chooseDoor("33");
-		} else if (Input.GetKeyDown (KeyCode.V)) {
-			chooseDoor("34");
-		} else if (Input.GetKeyDown (KeyCode.F)) {
-			chooseDoor("35");
-		} else if (Input.GetKeyDown (KeyCode.R)) {
-			chooseDoor("36");
-		} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
-			chooseDoor("37");
-		} else if (Input.GetKeyDown (KeyCode.Keypad3)) {
-			chooseDoor("40");
-		} else if (Input.GetKeyDown (KeyCode.Keypad5)) {
-			chooseDoor("41");
-		} else if (Input.GetKeyDown (KeyCode.Keypad7)) {
-			chooseDoor("42");
-		} else if (Input.GetKeyDown (KeyCode.Slash)) {
-			chooseDoor("43");
-		} else if (Input.GetKeyDown (KeyCode.Semicolon)) {
-			chooseDoor("44");
-		} else if (Input.GetKeyDown (KeyCode.L)) {
-			chooseDoor("45");
-		} else if (Input.GetKeyDown (KeyCode.O)) {
-			chooseDoor("46");
-		} else if (Input.GetKeyDown (KeyCode.Alpha9)) {
-			chooseDoor("47");
-		} else if (Input.GetKeyDown (KeyCode.Keypad0)) {
-			chooseDoor("50");
-		} else if (Input.GetKeyDown (KeyCode.Keypad6)) {
-			chooseDoor("51");
-		} else if (Input.GetKeyDown (KeyCode.Keypad8)) {
-			chooseDoor("52");
-		} else if (Input.GetKeyDown (KeyCode.Asterisk)) {
-			chooseDoor("53");
-		} else if (Input.GetKeyDown (KeyCode.Period)) {
-			chooseDoor("54");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) { // ö
-			chooseDoor("55");
-		} else if (Input.GetKeyDown (KeyCode.P)) {
-			chooseDoor("56");
-		} else if (Input.GetKeyDown (KeyCode.Alpha0)) {
-			chooseDoor("57");
-		} else if (Input.GetKeyDown (KeyCode.Comma)) { // num
-			chooseDoor("60");
-		} else if (Input.GetKeyDown (KeyCode.Keypad1)) {
-			chooseDoor("61");
-		} else if (Input.GetKeyDown (KeyCode.Keypad9)) {
-			chooseDoor("62");
-		} else if (Input.GetKeyDown (KeyCode.KeypadMinus)) {
-			chooseDoor("63");
-		} else if (Input.GetKeyDown (KeyCode.Colon)) { 
-			chooseDoor("64");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) { // ä
-			chooseDoor("65");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) { // ü
-			chooseDoor("66");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) { // ß
-			chooseDoor("67");
-		} else if (Input.GetKeyDown (KeyCode.KeypadEnter)) {
-			chooseDoor("70");
-		} else if (Input.GetKeyDown (KeyCode.Keypad2)) {
-			chooseDoor("71");
-		} else if (Input.GetKeyDown (KeyCode.Keypad4)) {
-			chooseDoor("72");
-		} else if (Input.GetKeyDown (KeyCode.KeypadPlus)) {
-			chooseDoor("73");
-		} else if (Input.GetKeyDown (KeyCode.Minus)) {
-			chooseDoor("74");
-		} else if (Input.GetKeyDown (KeyCode.Hash)) {
-			chooseDoor("75");
-		} else if (Input.GetKeyDown (KeyCode.Plus)) {
-			chooseDoor("76");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) { // Apostroph
-			chooseDoor("77");
+
+		// Winning Condition 
+		if(quizKeys.Count==32 || player1Points==0 || player2Points==0) {
+
+			if(player1Points>player2Points) {
+				((TextMesh) GameObject.Find("Player2Wins").GetComponent("TextMesh")).text="Player 2 Wins";
+			} else {
+				((TextMesh) GameObject.Find("Player1Wins").GetComponent("TextMesh")).text="Player 1 Wins";
+			}
+
+			if( (Input.GetKeyDown (KeyCode.KeypadDivide)) ||  (Input.GetKeyDown (KeyCode.KeypadEnter)) ||
+			    (Input.GetKeyDown (KeyCode.Y)) ||   (Input.GetKeyDown (KeyCode.Comma)) ) {
+				Application.LoadLevel (Application.loadedLevel);
+			}
+
 		}
 
+		else {
+
+			if(isPaused) {
+				infoText.text= "Round " + roundNumber.ToString();
+			} else {
+				infoText.text= Mathf.Floor(roundCounter).ToString();
+			}
+
+			//32 rounds with short pauses between
+			if(roundCounter<0.1) {
+				if(isPaused) {
+					roundCounter=roundCounterDefault;
+
+					// play random sound & save it
+					currentCharacter = allDoorCharacters[Random.Range(0, 31)];
+					while(quizKeys.Contains(currentCharacter)) {
+						currentCharacter = allDoorCharacters[Random.Range(0, 31)];
+					}
+
+					quizKeys.Add(currentCharacter);
+					playSoundByName(currentCharacter.gameObject.name);
+
+				} else {
+					roundCounter=pauseCounterDefault;
+					roundNumber++;
+
+					// check who has won
+					if(!roundHasWinner) {
+						removeCharacter(true);
+						removeCharacter(false);
+					}
+
+				}
+				isPaused=!isPaused;
+			} 
+
+
+			//for(int i = 0; i < allDoorCharacters.Length; i++){
+			//	allDoorCharacters[i].transform.Rotate(new Vector3(allDoorCharacters[i].transform.rotation.x, allDoorCharacters[i].transform.rotation.y + 15.0f * Time.deltaTime, allDoorCharacters[i].transform.rotation.z));
+			//}
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				camToggle = !camToggle;
+				/*cam1.GetComponent<Camera>().enabled = camToggle;
+				cam2.GetComponent<Camera>().enabled = camToggle;
+				overview.GetComponent<Camera>().enabled = !camToggle;*/
+				cam1.SetActive(camToggle);
+				cam2.SetActive(camToggle);
+				overview.SetActive(!camToggle);
+			} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
+				chooseDoor("00");
+			} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+				chooseDoor("01");
+			} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+				chooseDoor("02");
+			} else if (Input.GetKeyDown (KeyCode.Alpha4)) {
+				chooseDoor("03");
+			} else if (Input.GetKeyDown (KeyCode.Alpha5)) {
+				chooseDoor("04");
+			} else if (Input.GetKeyDown (KeyCode.Alpha6)) {
+				chooseDoor("05");
+			} else if (Input.GetKeyDown (KeyCode.Alpha7)) {
+				chooseDoor("06");
+			} else if (Input.GetKeyDown (KeyCode.Alpha8)) {
+				chooseDoor("07");
+			} else if (Input.GetKeyDown (KeyCode.Q)) {
+				chooseDoor("10");
+			} else if (Input.GetKeyDown (KeyCode.W)) {
+				chooseDoor("11");
+			} else if (Input.GetKeyDown (KeyCode.E)) {
+				chooseDoor("12");
+			} else if (Input.GetKeyDown (KeyCode.R)) {
+				chooseDoor("13");
+			} else if (Input.GetKeyDown (KeyCode.T)) {
+				chooseDoor("14");
+			} else if (Input.GetKeyDown (KeyCode.Z)) {
+				chooseDoor("15");
+			} else if (Input.GetKeyDown (KeyCode.U)) {
+				chooseDoor("16");
+			} else if (Input.GetKeyDown (KeyCode.I)) {
+				chooseDoor("17");
+			} else if (Input.GetKeyDown (KeyCode.A)) {
+				chooseDoor("20");
+			} else if (Input.GetKeyDown (KeyCode.S)) {
+				chooseDoor("21");
+			} else if (Input.GetKeyDown (KeyCode.D)) {
+				chooseDoor("22");
+			} else if (Input.GetKeyDown (KeyCode.F)) {
+				chooseDoor("23");
+			} else if (Input.GetKeyDown (KeyCode.G)) {
+				chooseDoor("24");
+			} else if (Input.GetKeyDown (KeyCode.H)) {
+				chooseDoor("25");
+			} else if (Input.GetKeyDown (KeyCode.J)) {
+				chooseDoor("26");
+			} else if (Input.GetKeyDown (KeyCode.K)) {
+				chooseDoor("27");
+			} else if (Input.GetKeyDown (KeyCode.Y)) {
+				chooseDoor("30");
+			} else if (Input.GetKeyDown (KeyCode.X)) {
+				chooseDoor("31");
+			} else if (Input.GetKeyDown (KeyCode.C)) {
+				chooseDoor("32");
+			} else if (Input.GetKeyDown (KeyCode.V)) {
+				chooseDoor("33");
+			} else if (Input.GetKeyDown (KeyCode.B)) {
+				chooseDoor("34");
+			} else if (Input.GetKeyDown (KeyCode.N)) {
+				chooseDoor("35");
+			} else if (Input.GetKeyDown (KeyCode.M)) {
+				chooseDoor("36");
+			} else if (Input.GetKeyDown (KeyCode.Comma)) {
+				chooseDoor("37");
+			} else if (Input.GetKeyDown (KeyCode.KeypadEnter)) {
+				chooseDoor("40");
+			} else if (Input.GetKeyDown (KeyCode.KeypadPeriod)) {
+				chooseDoor("41");
+			} else if (Input.GetKeyDown (KeyCode.Keypad0)) {
+				chooseDoor("42");
+			} else if (Input.GetKeyDown (KeyCode.Keypad3)) {
+				chooseDoor("43");
+			} else if (Input.GetKeyDown (KeyCode.KeypadPlus)) {
+				chooseDoor("44");
+			} else if (Input.GetKeyDown (KeyCode.KeypadMinus)) {
+				chooseDoor("45");
+			} else if (Input.GetKeyDown (KeyCode.KeypadMultiply)) {
+				chooseDoor("46");
+			} else if (Input.GetKeyDown (KeyCode.KeypadDivide)) {
+				chooseDoor("47");
+			} else if (Input.GetKeyDown (KeyCode.Keypad2)) {
+				chooseDoor("50");
+			} else if (Input.GetKeyDown (KeyCode.Keypad1)) {
+				chooseDoor("51");
+			} else if (Input.GetKeyDown (KeyCode.Keypad6)) {
+				chooseDoor("52");
+			} else if (Input.GetKeyDown (KeyCode.Keypad5)) {
+				chooseDoor("53");
+			} else if (Input.GetKeyDown (KeyCode.Keypad4)) {
+				chooseDoor("54");
+			} else if (Input.GetKeyDown (KeyCode.Keypad9)) { 
+				chooseDoor("55");
+			} else if (Input.GetKeyDown (KeyCode.Keypad8)) {
+				chooseDoor("56");
+			} else if (Input.GetKeyDown (KeyCode.Keypad7)) {
+				chooseDoor("57");
+			} else if (Input.GetKeyDown (KeyCode.RightArrow)) { // num
+				chooseDoor("60");
+			} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				chooseDoor("61");
+			} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+				chooseDoor("62");
+			} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+				chooseDoor("63");
+			} else if (Input.GetKeyDown (KeyCode.F12)) { 
+				chooseDoor("64");
+			} else if (Input.GetKeyDown (KeyCode.F11)) { // ä
+				chooseDoor("65");
+			} else if (Input.GetKeyDown (KeyCode.F10)) { // ü
+				chooseDoor("66");
+			} else if (Input.GetKeyDown (KeyCode.F9)) { // ß
+				chooseDoor("67");
+			} else if (Input.GetKeyDown (KeyCode.F8)) {
+				chooseDoor("70");
+			} else if (Input.GetKeyDown (KeyCode.F7)) {
+				chooseDoor("71");
+			} else if (Input.GetKeyDown (KeyCode.F6)) {
+				chooseDoor("72");
+			} else if (Input.GetKeyDown (KeyCode.F5)) {
+				chooseDoor("73");
+			} else if (Input.GetKeyDown (KeyCode.F4)) {
+				chooseDoor("74");
+			} else if (Input.GetKeyDown (KeyCode.F3)) {
+				chooseDoor("75");
+			} else if (Input.GetKeyDown (KeyCode.F2)) {
+				chooseDoor("76");
+			} else if (Input.GetKeyDown (KeyCode.F1)) { // Apostroph
+				chooseDoor("77");
+			}
+
+
+			// GUI Text
+			roundCounter-=Time.deltaTime;
+			
+			scorePlayer1.text=player1Points.ToString() + " Left";
+			scorePlayer2.text=player2Points.ToString() + " Left";
+
+		}
 	}
-	string lastKey = "";
-	// evoke action on a trapdoor
+
+	string lastKeyP1 = "", lastKeyP2 = "";
+
+
+	/**
+	 * Selects a door and changes its status
+	 * Keys higher than 40 -> player2
+	 */
 	private void chooseDoor(string key) {
 
-		if(lastKey.Length>0 && lastKey != key) allDoorsValues[getPosition(lastKey)].GetComponent<DoorStatus>().setStatus(0);
+		string lastKey = lastKeyP2;
+		bool isPlayer1=false;
+		if(int.Parse(key) >= 40) {
+			isPlayer1=true;
+			lastKey = lastKeyP1;
+		}
+
+
 		DoorStatus doorScript = allDoorsValues[getPosition(key)].GetComponent<DoorStatus>();
 
-		// TODO real gaming interaction, currently only demo of all states
+		if(doorScript.getStatus()!=3) {
 
-		if (doorScript.getStatus() == 0) {
-			doorScript.setStatus(1);
-		} else if (doorScript.getStatus() == 1) {
-			doorScript.setStatus(3);
-		} else if (doorScript.getStatus() == 3) {
-			doorScript.setStatus(2);
-			playSound(key);
-		} else if (doorScript.getStatus() == 2) {
-			doorScript.setStatus(0);
+			//unselect door
+			if(lastKey.Length>0 && lastKey != key) {
+				if(allDoorsValues[getPosition(lastKey)].GetComponent<DoorStatus>().getStatus()!=3)
+					allDoorsValues[getPosition(lastKey)].GetComponent<DoorStatus>().setStatus(0);
+			}
+
+			if (doorScript.getStatus() == 0) {
+				doorScript.setStatus(1);
+				lastKey = key;
+
+			} else if (doorScript.getStatus() == 1) {
+
+				lastKey = "";
+
+				// right choice
+				if(allDoorCharacters[getPosition(key)].name == currentCharacter.gameObject.name) {
+					roundHasWinner=true;
+					roundCounter=0;
+					removeCharacter(isPlayer1);
+
+				// wrong choice
+				} else {
+					if(isPlayer1)
+						player1Points--;
+					else
+						player2Points--;
+
+					doorScript.setStatus(3);
+					playSound(key);
+
+				}
+
+
+			}
+
 		}
-		lastKey = key;
+
+		if(isPlayer1)
+			lastKeyP1 = key;
+		else
+			lastKeyP2 = key;
+
+	}
+
+	/**
+	 * checks if the opponent still has this character and removes it 
+	 **/
+	private void removeCharacter(bool removeFromPlayer1) {
+		int add=0;
+
+		if(!removeFromPlayer1) {
+			add=32;
+		}
+
+		for(int i=0+add; i<(32+add); i++) {
+
+			if(allDoorCharacters[i].name == currentCharacter.gameObject.name) {
+				DoorStatus doorScript = allDoorsValues[i].GetComponent<DoorStatus>();
+				doorScript.setStatus(3);
+
+				if(!removeFromPlayer1)
+					player1Points--;
+				else
+					player2Points--;
+			}
+		}
 	}
 
 	private void playSound(string key){
 		AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("charSounds/" + allDoorCharacters[getPosition(key)].name.Split('(')[0])as AudioClip , new Vector3(0.0f, 0.0f, 0.0f));
 	}
 
+	private void playSoundByName(string name){
+		AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("charSounds/" + name.Split('(')[0])as AudioClip , new Vector3(0.0f, 0.0f, 0.0f));
+	}
+	
 	// Get the Position of a key in the allDoorsKeys-Array
 	private int getPosition(string key) {
 		for (int i = 0; i < allDoorsKeys.Length; i++) {

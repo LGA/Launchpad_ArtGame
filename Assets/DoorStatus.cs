@@ -7,6 +7,7 @@ using System.Collections;
 
 public class DoorStatus : MonoBehaviour {
 
+	//public static int STAT_STANDARD=0, STAT_CHOOSE=1, STAT_OPEN=2, STAT_LOST=3;
 	private int status = 0; // 0 = standard, 1 = chosen, 2 = open, 3 = lost
 
 	GameObject light;
@@ -41,7 +42,9 @@ public class DoorStatus : MonoBehaviour {
 		case 2: openDoor();
 				break;
 		// lost
-		case 3: light.SetActive(false);
+		case 3: 
+			openDoor();
+			light.SetActive(false);
 				break;
 		}
 		status = statusNew;
