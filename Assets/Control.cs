@@ -147,6 +147,8 @@ public class Control : MonoBehaviour {
 						removeCharacter(false);
 					}
 
+					roundHasWinner=false;
+
 				}
 				isPaused=!isPaused;
 			} 
